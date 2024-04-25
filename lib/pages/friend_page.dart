@@ -15,10 +15,11 @@ class FriendPage extends StatelessWidget {
       ),
 
       body: ListView(
-        children: friends!.map((person) => ListTile(
+        children: friends.map((person) => ListTile(
           title: Text("${person.name} ${person.surname}"),
           subtitle: Text("Bonjour comment vas-tu?"),
           leading: CircleAvatar(),
+          onTap: () => Navigator.pop(context, person),
 
       )).toList(),
     )

@@ -34,14 +34,19 @@ class _FriendListPageState extends State<FriendListPage> {
           title: Text("Iut 2024 Training"),
           actions: [
             IconButton(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                Person person= await  Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => FriendPage(
-                          friends: friends,
+                           friends: friends,
                         ),
                       ));
+                print(person.name);
+                friends.remove(person);
+                setState(() {
+
+                });
                 },
                 icon: Icon(Icons.favorite))
           ],
@@ -76,4 +81,5 @@ class _FriendListPageState extends State<FriendListPage> {
       friends.remove(person);
     }
   }
+
 }
