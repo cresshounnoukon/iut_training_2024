@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'person_dart.dart';
+import '../models/person_dart.dart';
 
 class FriendPage extends StatelessWidget {
   final List<Person> friends;

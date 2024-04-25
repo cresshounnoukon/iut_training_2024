@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:training/common/I_button.dart';
+import 'package:training/common/i_input.dart';
+import 'package:training/models/person_dart.dart';
 
 class FriendFormPage extends StatefulWidget {
   const FriendFormPage({super.key});
@@ -8,10 +11,8 @@ class FriendFormPage extends StatefulWidget {
 }
 
 class _FriendFormPageState extends State<FriendFormPage> {
-  bool enabled = false;
-
-  double _sliderValue = 10.0;
-  DateTime? birthdate;
+  final _formKey = GlobalKey<FormState>();
+  final Person person= Person();
 
   @override
   Widget build(BuildContext context) {
@@ -22,115 +23,79 @@ class _FriendFormPageState extends State<FriendFormPage> {
       body: Container(
         padding: EdgeInsets.all(10),
         child: Form(
+          key: _formKey,
           child: ListView(
             children: [
-              TextFormField(
-                keyboardType: TextInputType.name,
-                decoration: InputDecoration(
-                    label: Text("Nom"),
-                    hintText: 'Nom',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    // prefix: Icon(Icons.person),
-                    prefixIcon: Icon(Icons.person),
-                    suffixIcon: Icon(Icons.remove_red_eye),
-                    fillColor: Colors.green.shade50,
-                    filled: true),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                keyboardType: TextInputType.name,
-                decoration: InputDecoration(
-                    label: Text("Prenom"),
-                    hintText: 'Prénom(s)',
-                    border: OutlineInputBorder()),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                keyboardType: TextInputType.name,
-                obscureText: true,
-                obscuringCharacter: "#",
-                decoration: InputDecoration(
-                    label: Text("Mot de passe"), border: OutlineInputBorder()),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              CheckboxListTile(
-                value: true,
-                onChanged: (value) {},
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text("J'accepte les conditions"),
-              ),
-              RadioListTile(
-                title: Text("Feminin"),
-                value: "value",
-                groupValue: "value",
-                onChanged: (value) {
-                  print(value);
+              IIinput(
+                name: 'Nom',
+
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return " Champ obligatoire";
+                  }
                 },
-              ),
-              SwitchListTile(
-                value: enabled,
-                onChanged: (value) {
-                  enabled = value;
-                  setState(() {});
+                onSaved: (value) {
+
+                 // print("Valeur à sauvegarder $value");
+                  person.name=value;
+
                 },
-                controlAffinity: ListTileControlAffinity.leading,
-                title: Text("Activez la connexion"),
+
+                prefixIcon: Icon(Icons.person),
+                suffixIcon: Icon(Icons.access_time_filled),
               ),
-              Slider(
-                value: _sliderValue,
-                min: 0.0,
-                max: 100.0,
-                activeColor: Colors.blue,
-                label: "Pourcentage",
-                divisions: 10,
-                onChanged: (value) {
-                  setState(() {
-                    _sliderValue = value;
-                  });
+             SizedBox(height: 10,),
+              IIinput(
+                name: 'Prenom',
+
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return " Champ obligatoire";
+                  }
                 },
-              ),
-              ListTile(
-                title: Text("Date de naissance"),
-                subtitle: Text("$birthdate"),
-                trailing: Icon(Icons.calendar_month),
-                onTap: () async {
-                  birthdate = await showDatePicker(
-                      cancelText: "Annuler",
-                      confirmText: "Confirmer",
-                      barrierColor: Colors.green.shade50,
-                      context: context,
-                      firstDate: DateTime(1990),
-                      lastDate: DateTime.now());
-                  setState(() {});
+                onSaved: (value) {
+
+                  // print("Valeur à sauvegarder $value");
+                  person.surname=value;
+
                 },
+
+                prefixIcon: Icon(Icons.person),
+                suffixIcon: Icon(Icons.access_time_filled),
               ),
-              ListTile(
-                title: Text("Période de réservatipn"),
-                subtitle: Text("A définr"),
-                trailing: Icon(Icons.calendar_month),
-                onTap: () async {
-               var bookPeriod= await   showDateRangePicker(
-                      context: context,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2024, 10));
-               print(bookPeriod.);
+              SizedBox(height: 10,),
+              IIinput(
+                name: 'Date de naissance',
+
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return " Champ obligatoire";
+                  }
                 },
+                onSaved: (value) {
+
+                  // print("Valeur à sauvegarder $value");
+                  person.birthDate=value;
+
+                },
+
+                prefixIcon: Icon(Icons.person),
+                suffixIcon: Icon(Icons.access_time_filled),
               ),
+              SizedBox(height: 10,),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: IButton(
+          onPressed: () {
+          if(  _formKey.currentState!.validate()){
+            _formKey.currentState!.save();
+           Navigator.pop(context, person);
+          }
+          },
+          text: 'Se connecter',
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:training/models/person_dart.dart';
 import 'package:training/pages/friend_form_page.dart';
 import 'package:training/pages/friend_page.dart';
-import 'package:training/pages/person_dart.dart';
 
 class FriendListPage extends StatefulWidget {
   const FriendListPage({super.key});
@@ -13,19 +13,7 @@ class FriendListPage extends StatefulWidget {
 class _FriendListPageState extends State<FriendListPage> {
   String name = "";
   bool liked = false;
-  List<Person> persons = [
-    Person(name: "ATCHO", surname: "Iovann", birthDate: "26/02/2005", sex: "M"),
-    Person(name: "DOE", surname: "JOHN", birthDate: "26/02/2005", sex: "M"),
-    Person(name: "ROLO", surname: "Junior", birthDate: "26/02/2005", sex: "M"),
-    Person(
-        name: "AGBALANDA",
-        surname: "Sinella",
-        birthDate: "26/02/2005",
-        sex: "M"),
-    Person(name: "DOCO", surname: "Jack", birthDate: "26/02/2005", sex: "M"),
-    Person(name: "BOCCO", surname: "Beline", birthDate: "26/02/2005", sex: "M"),
-    Person(name: "Jane", surname: "KIOTO", birthDate: "26/02/2005", sex: "M"),
-  ];
+  List<Person> persons = [];
   List<Person> friends = [];
 
   @override
@@ -68,12 +56,14 @@ class _FriendListPageState extends State<FriendListPage> {
             .toList(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          Person person = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => FriendFormPage(),
               ));
+
+          setState(() => persons.add(person));
         },
         child: Icon(Icons.add),
       ),
