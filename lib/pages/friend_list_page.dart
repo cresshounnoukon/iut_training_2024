@@ -19,58 +19,60 @@ class _FriendListPageState extends State<FriendListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveWidget(mobile: Scaffold(
-      appBar: AppBar(
-        title: Text("Iut 2024 Training"),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                Person person = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FriendPage(
-                        friends: friends,
-                      ),
-                    ));
-                print(person.name);
-                friends.remove(person);
-                setState(() {});
-              },
-              icon: Icon(Icons.favorite))
-        ],
-      ),
-      body:
-      ListView(
-        children: persons
-            .map((person) => ListTile(
-          title: Text("${person.name} ${person.surname}"),
-          subtitle: Text("Bonjour comment vas-tu?"),
-          leading: CircleAvatar(),
-          trailing: Icon(
-            Icons.favorite,
-            color: checkIfExists(person) ? Colors.red : Colors.black,
-          ),
-          onTap: () {
-            addFriend(person);
-            setState(() {});
+    return ResponsiveWidget(
+      mobile: Scaffold(
+        appBar: AppBar(
+          title: Text("Iut 2024 Training"),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  Person person = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FriendPage(
+                          friends: friends,
+                        ),
+                      ));
+                  print(person.name);
+                  friends.remove(person);
+                  setState(() {});
+                },
+                icon: Icon(Icons.favorite))
+          ],
+        ),
+        body: ListView(
+          children: persons
+              .map((person) => ListTile(
+                    title: Text("${person.name} ${person.surname}"),
+                    subtitle: Text("Bonjour comment vas-tu?"),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "https://images.unsplash.com/photo-1568044852337-9bcc3378fc3c?q=80&w=3435&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+                    ),
+                    trailing: Icon(
+                      Icons.favorite,
+                      color: checkIfExists(person) ? Colors.red : Colors.black,
+                    ),
+                    onTap: () {
+                      addFriend(person);
+                      setState(() {});
+                    },
+                  ))
+              .toList(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            Person person = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FriendFormPage(),
+                ));
+
+            setState(() => persons.add(person));
           },
-        ))
-            .toList(),
+          child: Icon(Icons.add),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Person person = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FriendFormPage(),
-              ));
-
-          setState(() => persons.add(person));
-        },
-        child: Icon(Icons.add),
-      ),
-    ),
-
     );
   }
 
