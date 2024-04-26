@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:training/pages/friend_list_page.dart';
 
+import 'common/responsive_widegt.dart';
+
 void main() {
   runApp(MyApp());
 }

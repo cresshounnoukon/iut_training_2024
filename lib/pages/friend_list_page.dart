@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training/common/responsive_widegt.dart';
 import 'package:training/models/person_dart.dart';
 import 'package:training/pages/friend_form_page.dart';
 import 'package:training/pages/friend_page.dart';
@@ -18,7 +19,7 @@ class _FriendListPageState extends State<FriendListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ResponsiveWidget(mobile: Scaffold(
       appBar: AppBar(
         title: Text("Iut 2024 Training"),
         actions: [
@@ -38,21 +39,22 @@ class _FriendListPageState extends State<FriendListPage> {
               icon: Icon(Icons.favorite))
         ],
       ),
-      body: ListView(
+      body:
+      ListView(
         children: persons
             .map((person) => ListTile(
-                  title: Text("${person.name} ${person.surname}"),
-                  subtitle: Text("Bonjour comment vas-tu?"),
-                  leading: CircleAvatar(),
-                  trailing: Icon(
-                    Icons.favorite,
-                    color: checkIfExists(person) ? Colors.red : Colors.black,
-                  ),
-                  onTap: () {
-                    addFriend(person);
-                    setState(() {});
-                  },
-                ))
+          title: Text("${person.name} ${person.surname}"),
+          subtitle: Text("Bonjour comment vas-tu?"),
+          leading: CircleAvatar(),
+          trailing: Icon(
+            Icons.favorite,
+            color: checkIfExists(person) ? Colors.red : Colors.black,
+          ),
+          onTap: () {
+            addFriend(person);
+            setState(() {});
+          },
+        ))
             .toList(),
       ),
       floatingActionButton: FloatingActionButton(
@@ -67,6 +69,8 @@ class _FriendListPageState extends State<FriendListPage> {
         },
         child: Icon(Icons.add),
       ),
+    ),
+
     );
   }
 
