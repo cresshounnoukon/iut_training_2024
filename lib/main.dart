@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:training/pages/friend_list_page.dart';
+import 'package:training/pages/future_page.dart';
 import 'package:training/pages/post_list_page.dart';
 
 import 'common/responsive_widegt.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Color(0X5e8851)),
           useMaterial3: true),
-      home: PostListPage(),
+      home: FuturePage(),
     );
   }
 }
